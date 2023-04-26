@@ -1,7 +1,5 @@
 using FoodAppAPI.Models;
-using FoodAppAPI.Models.Interfaces;
 using FoodAppAPI.Services;
-using FoodAppAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -17,9 +15,13 @@ namespace FoodAppAPI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.Configure<MenuDatabaseSettings>(builder.Configuration.GetSection("FoodAppDatabaseSettings"));
+            builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("FoodAppDatabaseSettings"));
             builder.Services.AddSingleton<IMenuDatabaseSettings>(provider => provider.GetRequiredService<IOptions<MenuDatabaseSettings>>().Value);
+            builder.Services.AddSingleton<IDatabaseSettings>(provider => provider.GetRequiredService<IOptions<DatabaseSettings>>().Value);
             builder.Services.AddSingleton<IMongoClient>(provider => new MongoClient(builder.Configuration.GetValue<string>("FoodAppDatabaseSettings:ConnectionString")));
+
             builder.Services.AddScoped<IMenuService, MenuService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {

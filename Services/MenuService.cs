@@ -1,6 +1,4 @@
 ﻿using FoodAppAPI.Models;
-using FoodAppAPI.Models.Interfaces;
-using FoodAppAPI.Services.Interfaces;
 using MongoDB.Driver;
 
 namespace FoodAppAPI.Services
@@ -23,22 +21,22 @@ namespace FoodAppAPI.Services
 
         public void Delete(string id)
         {
-            _menus.DeleteOne(student => student.Id == id);
+            _menus.DeleteOne(x => x.Id == id);
         }
 
         public List<Menu> Get()
         {
-            return _menus.Find(student => true).ToList();
+            return _menus.Find(x => true).ToList();
         }
 
         public Menu Get(string id)
         {
-            return _menus.Find(student => student.Id == id).FirstOrDefault();
+            return _menus.Find(x => x.Id == id).FirstOrDefault();
         }
 
         public Menu Update(string id, Menu menu)
         {
-            _menus.ReplaceOne(student => student.Id == id, menu);
+            _menus.ReplaceOne(x => x.Id == id, menu);
             return menu;
         }
     }

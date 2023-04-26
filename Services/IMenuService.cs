@@ -1,6 +1,6 @@
 ﻿using FoodAppAPI.Models;
 
-namespace FoodAppAPI.Services.Interfaces
+namespace FoodAppAPI.Services
 {
     public interface IMenuService
     {

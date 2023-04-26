@@ -1,8 +1,9 @@
 ﻿namespace FoodAppAPI.Models
 {
-    public class MenuDatabaseSettings : IMenuDatabaseSettings
+    public class DatabaseSettings : IDatabaseSettings
     {
         public string MenuCollectionName { get; set; } = String.Empty;
+        public string OrderCollectionName { get; set; } = String.Empty;
         public string ConnectionString { get; set; } = String.Empty;
         public string DatabaseName { get; set; } = String.Empty;
     }

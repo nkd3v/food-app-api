@@ -1,4 +1,4 @@
-﻿namespace FoodAppAPI.Models.Interfaces
+﻿namespace FoodAppAPI.Models
 {
     public interface IMenuDatabaseSettings
     {
