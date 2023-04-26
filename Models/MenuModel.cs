@@ -19,5 +19,7 @@ namespace FoodAppAPI.Models
         public double Price { get; set; } = 0;
         [BsonElement("image")]
         public string Image { get; set; } = String.Empty;
+        [BsonElement("description")]
+        public string Description { get; set; } = String.Empty;
     }
 }

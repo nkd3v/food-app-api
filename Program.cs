@@ -2,8 +2,11 @@ using FoodAppAPI.Models;
 using FoodAppAPI.Models.Interfaces;
 using FoodAppAPI.Services;
 using FoodAppAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using System.Text;
 
 namespace FoodAppAPI
 {
@@ -14,9 +17,25 @@ namespace FoodAppAPI
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.Configure<MenuDatabaseSettings>(builder.Configuration.GetSection("FoodAppDatabaseSettings"));
-            builder.Services.AddSingleton<IMenuDatabaseSettings>(sp => sp.GetRequiredService<IOptions<MenuDatabaseSettings>>().Value);
-            builder.Services.AddSingleton<IMongoClient>(s => new MongoClient(builder.Configuration.GetValue<string>("FoodAppDatabaseSettings:ConnectionString")));
+            builder.Services.AddSingleton<IMenuDatabaseSettings>(provider => provider.GetRequiredService<IOptions<MenuDatabaseSettings>>().Value);
+            builder.Services.AddSingleton<IMongoClient>(provider => new MongoClient(builder.Configuration.GetValue<string>("FoodAppDatabaseSettings:ConnectionString")));
             builder.Services.AddScoped<IMenuService, MenuService>();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+
+            builder.Services.AddAuthorization();
 
             // Add services to the container.
 
@@ -30,9 +49,11 @@ namespace FoodAppAPI
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseRouting();
 
             app.UseCors(builder =>
             {
