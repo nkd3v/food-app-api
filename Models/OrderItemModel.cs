@@ -6,7 +6,7 @@ namespace FoodAppAPI.Models
     public class OrderItemModel
     {
         [BsonElement("menuId")]
-        public string MenuId { get; set; } = String.Empty;
+        public Menu menu { get; set; } = null!;
         [BsonElement("quantity")]
         public int Quantity { get; set; } = 1;
     }

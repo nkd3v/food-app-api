@@ -9,8 +9,8 @@ namespace FoodAppAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
 
-        [BsonElement("userId")]
-        public string UserId { get; set; } = String.Empty;
+        [BsonElement("user")]
+        public UserModel user { get; set; } = null!;
 
         [BsonElement("orderItems")]
         public List<OrderItemModel>? OrderItems { get; set; } = null;
