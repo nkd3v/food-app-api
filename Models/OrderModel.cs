@@ -19,6 +19,6 @@ namespace FoodAppAPI.Models
         public string Detail { get; set; } = String.Empty;
 
         [BsonElement("status")]
-        public string Status { get; set; } = String.Empty;
+        public int Status { get; set; } = 0;
     }
 }
