@@ -12,7 +12,7 @@ namespace FoodAppAPI.Models
         [BsonElement("user")]
         public UserModel User { get; set; } = null!;
         [BsonElement("rider")]
-        public UserModel Rider { get; set; } = null!;
+        public UserModel? Rider { get; set; } = null;
 
         [BsonElement("orderItems")]
         public List<OrderItemModel>? OrderItems { get; set; } = null;

@@ -1,7 +1,9 @@
 ﻿using FoodAppAPI.Models;
 using FoodAppAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,6 +22,7 @@ namespace FoodAppAPI.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
+        [Authorize]
         public ActionResult<List<UserModel>> Get()
         {
             return _userService.Get();

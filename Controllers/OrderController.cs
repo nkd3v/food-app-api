@@ -1,5 +1,6 @@
 ﻿using FoodAppAPI.Models;
 using FoodAppAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -45,7 +46,7 @@ namespace FoodAppAPI.Controllers
             _orderService.Delete(id);
         }
 
-        [HttpPut("status/{id}")]
+        [HttpPatch("status/{id}")]
         public ActionResult<OrderModel> Put(string id, [FromBody] int orderStatus)
         {
             Console.WriteLine("hit");
@@ -56,5 +57,22 @@ namespace FoodAppAPI.Controllers
             }
             return Ok(updatedOrder);
         }
+
+        // get unassigned order
+        [HttpGet("unassigned")]
+        public ActionResult<List<OrderModel>> GetUnassignedOrder()
+        {
+            return _orderService.GetUnassignedOrder();
+        }
+
+        // assign an order with rider id
+        [HttpPatch("assign/{id}")]
+        public ActionResult<OrderModel> PutAssignOrder(string id, [FromBody] string riderId)
+        {
+            return _orderService.AssignedOrder(id, riderId);
+        }
+
+        // get order by rider id
+        // get order by user id
     }
 }

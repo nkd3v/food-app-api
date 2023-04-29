@@ -6,8 +6,9 @@
         {
             new UserModel()
             {
-                Username = "admin",
+                Id = "aaaaaaaaaaaaaaaaaaaaaaaa",
                 Email = "admin@dishdrop.pp.ua",
+                Username = "admin",
                 Password = "admin",
                 FirstName = "Admin",
                 LastName = "Admin",
@@ -15,8 +16,9 @@
             },
             new UserModel()
             {
-                Username = "customer",
+                Id = "bbbbbbbbbbbbbbbbbbbbbbbb",
                 Email = "customer@dishdrop.pp.ua",
+                Username = "customer",
                 Password = "customer",
                 FirstName = "John",
                 LastName = "Doe",
@@ -24,8 +26,9 @@
             },
             new UserModel()
             {
-                Username = "rider",
+                Id = "cccccccccccccccccccccccc",
                 Email = "rider@dishdrop.pp.ua",
+                Username = "rider",
                 Password = "rider",
                 FirstName = "John",
                 LastName = "Smith",

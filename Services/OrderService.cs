@@ -29,6 +29,11 @@ namespace FoodAppAPI.Services
             return _orders.Find(x => true).ToList();
         }
 
+        public List<OrderModel> GetUnassignedOrder()
+        {
+            return _orders.Find(x => x.Rider == null).ToList();
+        }
+
         public OrderModel Get(string id)
         {
             return _orders.Find(x => x.Id == id).FirstOrDefault();
@@ -50,6 +55,20 @@ namespace FoodAppAPI.Services
             }
 
             order.Status = status;
+            _orders.ReplaceOne(o => o.Id == id, order);
+            return order;
+        }
+
+        public OrderModel AssignedOrder(string id, string riderId)
+        {
+            var order = _orders.Find(x => x.Id == id).FirstOrDefault();
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            order.Rider = UserConstants.Users.FirstOrDefault(x => x.Id == riderId);
             _orders.ReplaceOne(o => o.Id == id, order);
             return order;
         }

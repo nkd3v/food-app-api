@@ -10,5 +10,7 @@ namespace FoodAppAPI.Services
         public OrderModel Update(string id, OrderModel order);
         public void Delete(string id);
         public OrderModel? UpdateStatus(string id, int status);
+        List<OrderModel> GetUnassignedOrder();
+        OrderModel AssignedOrder(string id, string riderId);
     }
 }
