@@ -31,7 +31,7 @@ namespace FoodAppAPI
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy", builder => builder
-                    .WithOrigins("https://localhost:3000", "https://dishdrop.pp.ua", "https://www.dishdrop.pp.ua")
+                    .WithOrigins("http://localhost:3000", "https://localhost:3000", "https://dishdrop.pp.ua", "https://www.dishdrop.pp.ua")
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
