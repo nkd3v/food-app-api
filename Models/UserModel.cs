@@ -10,7 +10,6 @@ namespace FoodAppAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
         public string Username { get; set; } = String.Empty;
-
         [JsonIgnore]
         public string Password { get; set; } = String.Empty;
         public string Email { get; set; } = String.Empty;

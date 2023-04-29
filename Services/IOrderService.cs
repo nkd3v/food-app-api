@@ -9,5 +9,6 @@ namespace FoodAppAPI.Services
         public OrderModel Get(string id);
         public OrderModel Update(string id, OrderModel order);
         public void Delete(string id);
+        public OrderModel? UpdateStatus(string id, int status);
     }
 }

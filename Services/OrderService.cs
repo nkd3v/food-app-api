@@ -39,5 +39,19 @@ namespace FoodAppAPI.Services
             _orders.ReplaceOne(x => x.Id == id, order);
             return order;
         }
+
+        public OrderModel? UpdateStatus(string id, int status)
+        {
+            var order = _orders.Find(x => x.Id == id).FirstOrDefault();
+
+            if (order == null)
+            {
+                return null;
+            }
+
+            order.Status = status;
+            _orders.ReplaceOne(o => o.Id == id, order);
+            return order;
+        }
     }
 }

@@ -44,5 +44,17 @@ namespace FoodAppAPI.Controllers
         {
             _orderService.Delete(id);
         }
+
+        [HttpPut("status/{id}")]
+        public ActionResult<OrderModel> Put(string id, [FromBody] int orderStatus)
+        {
+            Console.WriteLine("hit");
+            var updatedOrder = _orderService.UpdateStatus(id, orderStatus);
+            if (updatedOrder == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedOrder);
+        }
     }
 }

@@ -1,9 +1,12 @@
 using FoodAppAPI.Models;
 using FoodAppAPI.Services;
+using FoodAppAPI.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 
 namespace FoodAppAPI
@@ -22,6 +25,16 @@ namespace FoodAppAPI
 
             builder.Services.AddScoped<IMenuService, MenuService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IReviewService, ReviewService>();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
@@ -58,6 +71,7 @@ namespace FoodAppAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions   >();
 
             var app = builder.Build();
 
@@ -70,12 +84,7 @@ namespace FoodAppAPI
 
             app.UseRouting();
 
-            app.UseCors(builder =>
-            {
-                builder.AllowAnyOrigin();
-                builder.AllowAnyMethod();
-                builder.AllowAnyHeader();
-            });
+            app.UseCors("CorsPolicy");
 
             app.MapControllers();
 

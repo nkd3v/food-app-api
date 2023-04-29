@@ -1,6 +1,7 @@
 ﻿using FoodAppAPI.Models;
 using FoodAppAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,9 +34,9 @@ namespace FoodAppAPI.Controllers
 
         // POST api/<UserController>
         [HttpPost]
-        public ActionResult<UserModel> Post([FromBody] UserModel order)
+        public ActionResult<UserModel> Post([FromBody] UserModel user)
         {
-            return _userService.Create(order);
+            return _userService.Create(user);
         }
 
         // DELETE api/<UserController>/5
@@ -43,6 +44,27 @@ namespace FoodAppAPI.Controllers
         public void Delete(string id)
         {
             _userService.Delete(id);
+        }
+
+        private UserModel? GetCurrentUser()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity != null)
+            {
+                var userClaims = identity.Claims;
+
+                return new UserModel
+                {
+                    Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value ?? String.Empty,
+                    Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value ?? String.Empty,
+                    FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value ?? String.Empty,
+                    LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value ?? String.Empty,
+                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value ?? String.Empty
+                };
+            }
+
+            return null;
         }
     }
 }
