@@ -47,7 +47,7 @@ namespace FoodAppAPI.Controllers
         }
 
         [HttpPatch("status/{id}")]
-        public ActionResult<OrderModel> Put(string id, [FromBody] int orderStatus)
+        public ActionResult<OrderModel> UpdateStatus(string id, [FromBody] int orderStatus)
         {
             Console.WriteLine("hit");
             var updatedOrder = _orderService.UpdateStatus(id, orderStatus);
@@ -69,10 +69,26 @@ namespace FoodAppAPI.Controllers
         [HttpPatch("assign/{id}")]
         public ActionResult<OrderModel> PutAssignOrder(string id, [FromBody] string riderId)
         {
-            return _orderService.AssignedOrder(id, riderId);
+            var updatedOrder = _orderService.AssignedOrder(id, riderId);
+            if (updatedOrder == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedOrder);
         }
 
         // get order by rider id
+        [HttpGet("rider/{id}")]
+        public ActionResult<List<OrderModel>> GetOrderByRiderId(string id)
+        {
+            return _orderService.GetOrderByRiderId(id);
+        }
+
         // get order by user id
+        [HttpGet("customer/{id}")]
+        public ActionResult<List<OrderModel>> GetOrderByCustomerId(string id)
+        {
+            return _orderService.GetOrderByCustomerId(id);
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace FoodAppAPI.Services
         public void Delete(string id);
         public OrderModel? UpdateStatus(string id, int status);
         List<OrderModel> GetUnassignedOrder();
-        OrderModel AssignedOrder(string id, string riderId);
+        OrderModel? AssignedOrder(string id, string riderId);
+        List<OrderModel> GetOrderByRiderId(string riderId);
+        List<OrderModel> GetOrderByCustomerId(string customerId);
     }
 }

@@ -19,6 +19,10 @@ namespace FoodAppAPI.Models
 
         [BsonElement("detail")]
         public string Detail { get; set; } = String.Empty;
+        public string RestaurantName { get; set; } = String.Empty;
+        public string RestaurantAddress { get; set; } = String.Empty;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime ModifedAt { get; set; } = DateTime.UtcNow;
 
         [BsonElement("status")]
         public int Status { get; set; } = 0;

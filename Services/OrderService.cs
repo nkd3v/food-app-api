@@ -59,7 +59,7 @@ namespace FoodAppAPI.Services
             return order;
         }
 
-        public OrderModel AssignedOrder(string id, string riderId)
+        public OrderModel? AssignedOrder(string id, string riderId)
         {
             var order = _orders.Find(x => x.Id == id).FirstOrDefault();
 
@@ -69,8 +69,21 @@ namespace FoodAppAPI.Services
             }
 
             order.Rider = UserConstants.Users.FirstOrDefault(x => x.Id == riderId);
+            order.Status = 25;
             _orders.ReplaceOne(o => o.Id == id, order);
             return order;
+        }
+
+        public List<OrderModel> GetOrderByRiderId(string riderId)
+        {
+            var orders = _orders.Find(x => x.Rider != null && x.Rider.Id == riderId).ToList();
+            return orders;
+        }
+
+        public List<OrderModel> GetOrderByCustomerId(string customerId)
+        {
+            var orders = _orders.Find(x => x.User != null && x.User.Id == customerId).ToList();
+            return orders;
         }
     }
 }
