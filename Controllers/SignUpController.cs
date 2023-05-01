@@ -14,12 +14,12 @@ namespace FoodAppAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class SignUpController : ControllerBase
     {
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
 
-        public LoginController(IConfiguration configuration, IUserService userService)
+        public SignUpController(IConfiguration configuration, IUserService userService)
         {
             _configuration = configuration;
             _userService = userService;
@@ -27,9 +27,9 @@ namespace FoodAppAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] UserLogin userLogin)
+        public IActionResult SignUp([FromBody] UserSignUpDTO userSignUp)
         {
-            UserModel? user = Authenticate(userLogin);
+            UserModel? user = Register(userSignUp);
 
             if (user != null)
             {
@@ -37,7 +37,7 @@ namespace FoodAppAPI.Controllers
                 return Ok(token);
             }
 
-            return NotFound("User not found");
+            return NotFound("Registration failed");
         }
 
         private string Generate(UserModel user)
@@ -67,18 +67,31 @@ namespace FoodAppAPI.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private UserModel? Authenticate(UserLogin userLogin)
+        private UserModel? Register(UserSignUpDTO userSignUp)
         {
-            UserModel? storedUser = _userService.GetByUsername(userLogin.Username);
+            UserModel? currentUser = _userService.GetByUsername(userSignUp.Username);
 
-            if (storedUser == null)
+            if (currentUser == null)
             {
-                return null;
-            }
+                UserModel newUser = new UserModel
+                {
+                    Username = userSignUp.Username,
+                    Email = userSignUp.Email,
+                    FirstName = userSignUp.FirstName,
+                    Password = userSignUp.Password,
+                    Address = userSignUp.Address,
+                    Coordinate = userSignUp.Coordinate,
+                    LastName = userSignUp.LastName,
+                    PhoneNumber = userSignUp.PhoneNumber,
+                    Role = userSignUp.Role,
+                };
 
-            if (storedUser.Username.ToLower() ==  userLogin.Username.ToLower() && storedUser.Password == userLogin.Password)
-            {
-                return storedUser;
+                if (newUser.Role != "Rider" && newUser.Role != "Customer")
+                {
+                    return null;
+                }
+
+                return _userService.Create(newUser);
             }
 
             return null;

@@ -9,5 +9,6 @@ namespace FoodAppAPI.Services
         public UserModel Get(string id);
         public UserModel Update(string id, UserModel user);
         public void Delete(string id);
+        UserModel? GetByUsername(string username);
     }
 }

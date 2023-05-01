@@ -21,5 +21,7 @@ namespace FoodAppAPI.Models
         public string Image { get; set; } = String.Empty;
         [BsonElement("description")]
         public string Description { get; set; } = String.Empty;
+        [BsonElement("restaurantAddress")]
+        public string RestaurantAddress { get; set; } = String.Empty;
     }
 }

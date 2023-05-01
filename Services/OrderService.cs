@@ -6,11 +6,13 @@ namespace FoodAppAPI.Services
     public class OrderService : IOrderService
     {
         private readonly IMongoCollection<OrderModel> _orders;
+        private readonly IMongoCollection<UserModel> _users;
 
         public OrderService(IDatabaseSettings settings, IMongoClient mongoClient)
         {
             var database = mongoClient.GetDatabase(settings.DatabaseName);
             _orders = database.GetCollection<OrderModel>(settings.OrderCollectionName);
+            _users = database.GetCollection<UserModel>(settings.UserCollectionName);
         }
 
         public OrderModel Create(OrderModel order)
@@ -31,7 +33,7 @@ namespace FoodAppAPI.Services
 
         public List<OrderModel> GetUnassignedOrder()
         {
-            return _orders.Find(x => x.Rider == null).ToList();
+            return _orders.Find(x => x.Status == 0).ToList();
         }
 
         public OrderModel Get(string id)
@@ -68,7 +70,7 @@ namespace FoodAppAPI.Services
                 return null;
             }
 
-            order.Rider = UserConstants.Users.FirstOrDefault(x => x.Id == riderId);
+            order.Rider = _users.Find(x => x.Id == riderId).FirstOrDefault();
             order.Status = 25;
             _orders.ReplaceOne(o => o.Id == id, order);
             return order;

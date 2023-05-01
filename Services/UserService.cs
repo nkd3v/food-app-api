@@ -39,5 +39,10 @@ namespace FoodAppAPI.Services
             _users.ReplaceOne(x => x.Id == id, user);
             return user;
         }
+
+        public UserModel? GetByUsername(string username)
+        {
+            return _users.Find(x => x.Username == username).FirstOrDefault();
+        }
     }
 }
