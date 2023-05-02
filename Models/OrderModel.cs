@@ -26,5 +26,10 @@ namespace FoodAppAPI.Models
 
         [BsonElement("status")]
         public int Status { get; set; } = 0;
+        [BsonElement("totalPrice")]
+        public int TotalPrice { get; set; } = 0;
+        public string ReceiverName { get; set; } = String.Empty;
+        public string PhoneNumber { get; set; } = String.Empty;
+        public string Address { get; set; } = String.Empty;
     }
 }
