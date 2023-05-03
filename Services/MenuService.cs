@@ -28,7 +28,6 @@ namespace FoodAppAPI.Services
                 var restaurantAddress = _menus.Find(x => x.Restaurant == restaurant)
                     .FirstOrDefault().RestaurantAddress;
 
-                Console.WriteLine($"{restaurant} - {restaurantAddress}");
                 result.Add(new CanteenRestaurantDTO
                 {
                     Canteen = restaurantAddress,
@@ -41,13 +40,11 @@ namespace FoodAppAPI.Services
 
         private string CalculateSHA256Hash(string input)
         {
-            Console.WriteLine(input);
             using (SHA256 sha256 = SHA256.Create())
             {
                 byte[] inputBytes = Encoding.UTF8.GetBytes(input);
                 byte[] hashBytes = sha256.ComputeHash(inputBytes);
                 var result = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-                Console.WriteLine(result);
                 return result;
             }
         }

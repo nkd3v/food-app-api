@@ -24,11 +24,6 @@ namespace FoodAppAPI.Controllers
         public ActionResult<List<Menu>> Get()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            Console.WriteLine(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            Console.WriteLine(User.FindFirst(ClaimTypes.Email)?.Value);
-            Console.WriteLine(User.FindFirst(ClaimTypes.GivenName)?.Value);
-            Console.WriteLine(User.FindFirst(ClaimTypes.Surname)?.Value);
-            Console.WriteLine(User.FindFirst(ClaimTypes.Role)?.Value);
             return _menuService.Get();
         }
 

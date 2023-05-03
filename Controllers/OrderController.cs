@@ -49,7 +49,6 @@ namespace FoodAppAPI.Controllers
         [HttpPatch("status/{id}")]
         public ActionResult<OrderModel> UpdateStatus(string id, [FromBody] int orderStatus)
         {
-            Console.WriteLine("hit");
             var updatedOrder = _orderService.UpdateStatus(id, orderStatus);
             if (updatedOrder == null)
             {
