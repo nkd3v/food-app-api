@@ -1,4 +1,5 @@
 ﻿using FoodAppAPI.Models;
+using FoodAppAPI.Models.Responses;
 using FoodAppAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -29,6 +30,18 @@ namespace FoodAppAPI.Controllers
             Console.WriteLine(User.FindFirst(ClaimTypes.Surname)?.Value);
             Console.WriteLine(User.FindFirst(ClaimTypes.Role)?.Value);
             return _menuService.Get();
+        }
+
+        [HttpGet("restaurantcanteenpair")]
+        public ActionResult<List<CanteenRestaurantDTO>> GetCanteenRestaurant()
+        {
+            return _menuService.GetCanteenRestaurant();
+        }
+
+        [HttpGet("restaurant/{id}")]
+        public ActionResult<List<Menu>> GetMenuByRestaurantId(string id)
+        {
+            return _menuService.GetMenuByRestaurantId(id);
         }
 
         // GET api/<MenuController>/5

@@ -1,4 +1,5 @@
 ﻿using FoodAppAPI.Models;
+using FoodAppAPI.Models.Responses;
 
 namespace FoodAppAPI.Services
 {
@@ -9,5 +10,7 @@ namespace FoodAppAPI.Services
         public Menu Get(string id);
         public Menu Update(string id, Menu menu);
         public void Delete(string id);
+        List<CanteenRestaurantDTO> GetCanteenRestaurant();
+        List<Menu> GetMenuByRestaurantId(string id);
     }
 }
