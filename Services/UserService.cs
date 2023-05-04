@@ -44,9 +44,7 @@ namespace FoodAppAPI.Services
 
         public UserModel? UpdateDeliveryInfo(string id, UserDeliveryInfoDTO userDeliveryInfo)
         {
-            Console.WriteLine(JsonSerializer.Serialize(userDeliveryInfo));
             var user = _users.Find(x => x.Id == id).FirstOrDefault();
-            Console.WriteLine(id);
             user.FirstName = userDeliveryInfo.FirstName;
             user.PhoneNumber = userDeliveryInfo.PhoneNumber;
             user.Address = userDeliveryInfo.Address;
