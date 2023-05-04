@@ -10,6 +10,7 @@ using System.Text.Json;
 
 namespace FoodAppAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -72,7 +73,6 @@ namespace FoodAppAPI.Controllers
             return null;
         }
 
-        [Authorize]
         [HttpPost("updatedeliveryinfo")]
         public IActionResult UpdateUserDeliveryInfo([FromBody] UserDeliveryInfoDTO userDeliveryInfo)
         {

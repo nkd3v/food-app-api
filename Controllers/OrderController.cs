@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodAppAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase

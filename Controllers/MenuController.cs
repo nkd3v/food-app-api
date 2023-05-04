@@ -1,6 +1,7 @@
 ﻿using FoodAppAPI.Models;
 using FoodAppAPI.Models.Responses;
 using FoodAppAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -8,6 +9,7 @@ using System.Security.Claims;
 
 namespace FoodAppAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : ControllerBase
