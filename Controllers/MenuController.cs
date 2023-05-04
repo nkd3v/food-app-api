@@ -9,7 +9,6 @@ using System.Security.Claims;
 
 namespace FoodAppAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MenuController : ControllerBase

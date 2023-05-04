@@ -10,7 +10,6 @@ using System.Text.Json;
 
 namespace FoodAppAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
