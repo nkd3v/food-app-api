@@ -23,7 +23,6 @@ namespace FoodAppAPI.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        [Authorize]
         public ActionResult<List<UserModel>> Get()
         {
             return _userService.Get();
