@@ -1,4 +1,5 @@
 ﻿using FoodAppAPI.Models;
+using FoodAppAPI.Models.Requests;
 
 namespace FoodAppAPI.Services
 {
@@ -10,5 +11,6 @@ namespace FoodAppAPI.Services
         public UserModel Update(string id, UserModel user);
         public void Delete(string id);
         UserModel? GetByUsername(string username);
+        UserModel? UpdateDeliveryInfo(string id, UserDeliveryInfoDTO userDeliveryInfo);
     }
 }

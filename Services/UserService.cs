@@ -1,5 +1,7 @@
 ﻿using FoodAppAPI.Models;
+using FoodAppAPI.Models.Requests;
 using MongoDB.Driver;
+using System.Text.Json;
 
 namespace FoodAppAPI.Services
 {
@@ -37,6 +39,25 @@ namespace FoodAppAPI.Services
         public UserModel Update(string id, UserModel user)
         {
             _users.ReplaceOne(x => x.Id == id, user);
+            return user;
+        }
+
+        public UserModel? UpdateDeliveryInfo(string id, UserDeliveryInfoDTO userDeliveryInfo)
+        {
+            Console.WriteLine(JsonSerializer.Serialize(userDeliveryInfo));
+            var user = _users.Find(x => x.Id == id).FirstOrDefault();
+            Console.WriteLine(id);
+            user.FirstName = userDeliveryInfo.FirstName;
+            user.PhoneNumber = userDeliveryInfo.PhoneNumber;
+            user.Address = userDeliveryInfo.Address;
+
+            var result = _users.ReplaceOne(x => x.Id == id, user);
+
+            if (result == null || !result.IsAcknowledged)
+            {
+                return null;
+            }
+
             return user;
         }
 

@@ -25,3 +25,4 @@ namespace FoodAppAPI.Models
         public string RestaurantAddress { get; set; } = String.Empty;
     }
 }
+

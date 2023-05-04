@@ -1,4 +1,5 @@
 ﻿using FoodAppAPI.Models;
+using FoodAppAPI.Models.Requests;
 using FoodAppAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,11 +64,31 @@ namespace FoodAppAPI.Controllers
                     Email = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Email)?.Value ?? String.Empty,
                     FirstName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.GivenName)?.Value ?? String.Empty,
                     LastName = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Surname)?.Value ?? String.Empty,
-                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value ?? String.Empty
+                    Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value ?? String.Empty,
+                    Id = userClaims.FirstOrDefault(o => o.Type == "id")?.Value ?? String.Empty
                 };
             }
 
             return null;
+        }
+
+        [Authorize]
+        [HttpPost("updatedeliveryinfo")]
+        public IActionResult UpdateUserDeliveryInfo([FromBody] UserDeliveryInfoDTO userDeliveryInfo)
+        {
+            UserModel? user = GetCurrentUser();
+            if (user == null || userDeliveryInfo == null)
+            {
+                return BadRequest();
+            }
+
+            var result = _userService.UpdateDeliveryInfo(user.Id, userDeliveryInfo);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(userDeliveryInfo);
         }
     }
 }
